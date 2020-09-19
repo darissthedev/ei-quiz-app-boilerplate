@@ -114,15 +114,15 @@ function generateQuestions(){
  </div>
  <div class="c-radio">
    <input type="radio" id="answerChoice2" name="answer" value='${store.questions[store.currentQuestion].answers[1]}'>
-   <label for="answerChoice1" id="labelText">${store.questions[store.currentQuestion].answers[1]}</label>
+   <label for="answerChoice2" id="labelText">${store.questions[store.currentQuestion].answers[1]}</label>
  </div>
  <div class="c-radio">
    <input type="radio" id="answerChoice3" name="answer" value='${store.questions[store.currentQuestion].answers[2]}'>
-   <label for="answerChoice1" id="labelText">${store.questions[store.currentQuestion].answers[2]}</label>
+   <label for="answerChoice3" id="labelText">${store.questions[store.currentQuestion].answers[2]}</label>
  </div>
  <div class="c-radio">
    <input type="radio" id="answerChoice4" name="answer" value='${store.questions[store.currentQuestion].answers[3]}'>
-   <label for="answerChoice1" id="labelText">${store.questions[store.currentQuestion].answers[3]}</label>
+   <label for="answerChoice4" id="labelText">${store.questions[store.currentQuestion].answers[3]}</label>
  </div>
  </div>
  <div>
@@ -165,11 +165,9 @@ function generateEndPage(){
 <p id="paragraphText">
   You answered ${store.score} out of ${store.questions.length} correct!
 </p>
-<form>
   <div class="btn">
-    <button type="submit" id = "endQuiz">Retake Quiz</button>
+    <button id = "endQuiz">Retake Quiz</button>
   </div>
-</form>
 </div>`;
     return endPage;}
   else  {
@@ -186,11 +184,9 @@ function generateEndPage(){
 <p id="paragraphText">
   You answered ${store.score} out of ${store.questions.length} correct!
 </p>
-<form>
   <div class="btn">
-    <button type="submit" id = "endQuiz" >Retake Quiz</button>
+    <button id = "endQuiz" >Retake Quiz</button>
   </div>
-</form>
 </div>`;
     return endPage;
   }
@@ -218,7 +214,7 @@ function generateCorrectPage(){
 function generateIncorrectPage(){
   let incorrectPage = `<div class="coolClass">
   <h3 class="welcomePageH2">
-      Brick! The correct answer was ${store.questions[store.currentQuestion].correctAnswer}
+      Brick! The correct answer was ${store.questions[store.currentQuestion -1].correctAnswer}
     </h3>
     <p id="paragraphText">
       You have ${store.score} out of ${store.questions.length}
@@ -274,10 +270,12 @@ function handleNextButton(){
   });
 }
 function handleRetakeButton(){
+  $('main').on('click', '#endQuiz', function(){
   store.currentQuestion = 0;
   store.score = 0;
   store.quizStarted = true;
   render();
+  });
 }
 function renderCorrectPage(){
   let page ='';
@@ -308,7 +306,9 @@ function main(){
   render();
   handleNextButton();
   handleStartButton();
+  handleRetakeButton();
   handleSubmitButton();
+  
 }
 $(main);
 /**
